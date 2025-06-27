@@ -6,14 +6,23 @@ import com.google.firebase.FirebaseOptions;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Base64;
+
 @Configuration
 public class FirebaseConfig {
     @PostConstruct
     public void init() {
         try {
-            FileInputStream serviceAccount = new FileInputStream("src/main/resources/firebase-key.json");
+            String base64Creds = System.getenv("FIREBASE_CONFIG_BASE64");
+            if (base64Creds == null) {
+                throw new RuntimeException("⚠️ Variable de entorno FIREBASE_CONFIG_BASE64 no encontrada.");
+            }
+
+            byte[] decoded = Base64.getDecoder().decode(base64Creds);
+            ByteArrayInputStream serviceAccount = new ByteArrayInputStream(decoded);
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -21,9 +30,8 @@ public class FirebaseConfig {
 
             if (FirebaseApp.getApps().isEmpty()) {
                 FirebaseApp.initializeApp(options);
+                System.out.println("✅ Firebase inicializado desde entorno");
             }
-
-            System.out.println("✅ Firebase inicializado");
 
         } catch (IOException e) {
             System.err.println("❌ Error inicializando Firebase: " + e.getMessage());
