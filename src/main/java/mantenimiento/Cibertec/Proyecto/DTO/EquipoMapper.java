@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 public class EquipoMapper {
     public static EquiposDTO toDTO(Equipos equipos){
         EquiposDTO dto = new EquiposDTO();
+        dto.setId(equipos.getId());
         dto.setNombre(equipos.getNombre());
         dto.setTipo(equipos.getTipo());
         dto.setSede(equipos.getSede());
@@ -17,6 +18,7 @@ public class EquipoMapper {
 
     public static Equipos toEntity(EquiposDTO dto){
         Equipos equipo = new Equipos();
+        equipo.setId(dto.getId());
         equipo.setNombre(dto.getNombre());
         equipo.setTipo(dto.getTipo());
         equipo.setSede(dto.getSede());
