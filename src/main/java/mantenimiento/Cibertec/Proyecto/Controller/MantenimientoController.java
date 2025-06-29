@@ -39,5 +39,11 @@ public class MantenimientoController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Mantenimiento guardado correctamente");
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarPorId (@PathVariable Integer id){
+        mantenimientoService.eliminarMantenimiento(id);
+        return ResponseEntity.ok("Mantenimiento eliminado con exito");
+    }
+
 
 }

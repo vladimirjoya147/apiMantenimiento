@@ -13,4 +13,6 @@ public interface MantenimientoServicio {
     public void editarMantenimiento(int id, String descripcion, String nuevoEstado);
 
     public Mantenimiento guardarMantenimiento (MantenimientoDTO mantenimiento);
+
+    public void eliminarMantenimiento (int id);
 }

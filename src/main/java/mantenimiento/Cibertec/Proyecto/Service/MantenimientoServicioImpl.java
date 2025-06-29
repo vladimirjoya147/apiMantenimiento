@@ -30,6 +30,7 @@ public class MantenimientoServicioImpl implements MantenimientoServicio{
         List<Mantenimiento> mantenimientos = mantenimientoRepositorio.findAll();
         return mantenimientos.stream().map(m->{
             MantenimientoDTO dto = new MantenimientoDTO();
+            dto.setId(m.getId());
             dto.setFecha(m.getFecha());
             dto.setDescripcion(m.getDescripcion());
             dto.setNombreEquipo(m.getEquipos().getNombre());
@@ -71,6 +72,11 @@ public class MantenimientoServicioImpl implements MantenimientoServicio{
         m.setSincronizado(true);
 
         return mantenimientoRepositorio.save(m);
+    }
+
+    @Override
+    public void eliminarMantenimiento(int id) {
+        equiposRepositorio.deleteById(id);
     }
 
 }
