@@ -26,7 +26,7 @@ public class EquiposController {
     }
 
 
-    @GetMapping("listar")
+    @GetMapping("/listar")
     public ResponseEntity<List<EquiposDTO>> listaequipos(){
         return ResponseEntity.ok(equipoService.listaEquipos());
     }
