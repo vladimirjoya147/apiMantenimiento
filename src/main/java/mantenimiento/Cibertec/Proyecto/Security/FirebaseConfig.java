@@ -18,13 +18,16 @@ public class FirebaseConfig {
     public void init() {
         try {
             String escapedJson = System.getenv("FIREBASE_CONFIG_JSON");
-            if (escapedJson == null || escapedJson.trim().isEmpty()) {
-                throw new RuntimeException("⚠️ Variable de entorno FIREBASE_CONFIG_JSON no encontrada o vacía.");
+            if (escapedJson == null) {
+                throw new RuntimeException("⚠️ Variable de entorno FIREBASE_CONFIG_ESCAPED no encontrada.");
             }
 
-            ByteArrayInputStream serviceAccount = new ByteArrayInputStream(
-                    escapedJson.getBytes(StandardCharsets.UTF_8)
-            );
+            String plainJson = escapedJson
+                    .replace("\\n", "\n")
+                    .replace("\\\"", "\"");
+
+            ByteArrayInputStream serviceAccount =
+                    new ByteArrayInputStream(plainJson.getBytes(StandardCharsets.UTF_8));
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -32,7 +35,7 @@ public class FirebaseConfig {
 
             if (FirebaseApp.getApps().isEmpty()) {
                 FirebaseApp.initializeApp(options);
-                System.out.println("✅ Firebase inicializado desde variable de entorno (JSON escapado)");
+                System.out.println("✅ Firebase inicializado desde entorno desescapado");
             }
 
         } catch (IOException e) {
