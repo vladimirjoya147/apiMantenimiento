@@ -17,7 +17,7 @@ public class FirebaseConfig {
     @PostConstruct
     public void init() {
         try {
-            String escapedJson = System.getenv("git af");
+            String escapedJson = System.getenv("FIREBASE_CONFIG_JSON");
             if (escapedJson == null || escapedJson.trim().isEmpty()) {
                 throw new RuntimeException("⚠️ Variable de entorno FIREBASE_CONFIG_JSON no encontrada o vacía.");
             }
