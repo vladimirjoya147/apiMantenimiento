@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/equipos")
+@RequestMapping("/equipo")
 public class EquiposController {
 
     private final EquipoService equipoService;
@@ -25,6 +25,12 @@ public class EquiposController {
         this.equipoService = equipoService;
     }
 
+
+    @GetMapping("listar")
+    public ResponseEntity<List<EquiposDTO>> listaequipos(){
+        List<EquiposDTO> equipos = equipoService.listaEquipos();
+        return ResponseEntity.ok(equipos);
+    }
 
     @GetMapping
     public ResponseEntity<Page<EquiposDTO>> listarequipos (@RequestParam(defaultValue = "0") int page,
@@ -52,7 +58,7 @@ public class EquiposController {
         return ResponseEntity.status(HttpStatus.CREATED).body(equipoguardado);
     }
 
-    @PatchMapping("actualizar/{id}")
+    @PatchMapping("/actualizar/{id}")
     public ResponseEntity<EquiposUpdateDTO> actualizaEquipo (@PathVariable Integer id, EquiposUpdateDTO equiposUpdateDTO){
         if (!id.equals(equiposUpdateDTO.getId())) {
             System.out.println(equiposUpdateDTO.getId());

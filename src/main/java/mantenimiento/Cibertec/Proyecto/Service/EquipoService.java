@@ -15,6 +15,8 @@ public interface EquipoService {
 
     public Page<EquiposDTO> listarEquipos(Pageable pageable);
 
+    List<EquiposDTO> listaEquipos();
+
     public List<EquiposDTO> listarEquiposNombre(String nombre);
     public void eliminarEquipo(Integer id);
 
