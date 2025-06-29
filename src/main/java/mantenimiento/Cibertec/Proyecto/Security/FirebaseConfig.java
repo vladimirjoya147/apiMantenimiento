@@ -17,18 +17,14 @@ public class FirebaseConfig {
     @PostConstruct
     public void init() {
         try {
-            String escapedJson = System.getenv("FIREBASE_CONFIG_JSON");
+            String base64Creds = System.getenv("FIREBASE_CONFIG_BASE64");
 
-            if (escapedJson == null || escapedJson.isBlank()) {
-                throw new RuntimeException("⚠️ Variable de entorno FIREBASE_CONFIG_JSON no encontrada o vacía.");
+            if (base64Creds == null || base64Creds.isBlank()) {
+                throw new RuntimeException("⚠️ Variable de entorno FIREBASE_CONFIG_BASE64 no encontrada o vacía.");
             }
-
-            String plainJson = escapedJson
-                    .replace("\\\\n", "\n")
-                    .replace("\\\"", "\"");  
-
-            ByteArrayInputStream serviceAccount =
-                    new ByteArrayInputStream(plainJson.getBytes(StandardCharsets.UTF_8));
+            
+            byte[] decodedBytes = Base64.getDecoder().decode(base64Creds);
+            ByteArrayInputStream serviceAccount = new ByteArrayInputStream(decodedBytes);
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -36,11 +32,13 @@ public class FirebaseConfig {
 
             if (FirebaseApp.getApps().isEmpty()) {
                 FirebaseApp.initializeApp(options);
-                System.out.println("✅ Firebase inicializado desde entorno desescapado");
+                System.out.println("✅ Firebase inicializado desde Base64");
             }
 
         } catch (IOException e) {
             System.err.println("❌ Error inicializando Firebase: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.err.println("❌ Base64 inválido: " + e.getMessage());
         }
     }
 }
