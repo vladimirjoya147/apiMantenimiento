@@ -26,23 +26,21 @@ public class FirebaseAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        System.out.println(header);
+        System.out.println("🔐 Header: " + header);
 
         if (header == null || !header.startsWith("Bearer ")) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            System.out.println("segundo"+ header);
-            response.getWriter().write(header +" Falta el token o formato incorrecto");
+            response.setContentType("text/plain");
+            response.getWriter().write("❌ Falta el token o está en formato incorrecto");
             return;
         }
 
         String token = header.substring(7);
-        System.out.println("tercero"+token);
+        System.out.println("🔍 Token recibido: " + token);
 
         try {
-            System.out.println("🔍 Verificando token...");
             FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
             System.out.println("✅ Token verificado: " + decodedToken.getEmail());
-
 
             List<GrantedAuthority> authorities = new ArrayList<>();
             Authentication authentication = new UsernamePasswordAuthenticationToken(decodedToken, null, authorities);
@@ -54,8 +52,9 @@ public class FirebaseAuthenticationFilter extends OncePerRequestFilter {
 
         } catch (FirebaseAuthException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Token inválido: " + e.getMessage());
+            response.setContentType("text/plain");
+            response.getWriter().write("❌ Token inválido: " + e.getMessage());
+            System.err.println("❌ Error al verificar token: " + e.getMessage());
         }
-
     }
 }

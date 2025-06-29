@@ -20,7 +20,7 @@ public class FirebaseConfig {
             String base64Creds = System.getenv("FIREBASE_CONFIG");
 
             if (base64Creds == null || base64Creds.isBlank()) {
-                throw new RuntimeException("⚠️ Variable de entorno FIREBASE_CONFIG_BASE64 no encontrada o vacía.");
+                throw new RuntimeException("⚠️ Variable de entorno FIREBASE_CONFIG no encontrada o vacía.");
             }
 
             byte[] decodedBytes = Base64.getDecoder().decode(base64Creds);
