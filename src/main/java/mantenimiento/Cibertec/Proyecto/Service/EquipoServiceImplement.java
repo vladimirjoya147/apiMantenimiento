@@ -26,7 +26,7 @@ public class EquipoServiceImplement implements EquipoService{
 
     @Override
     public List<EquiposDTO> listaEquipos() {
-        return equiposRepositorio.findAll().stream().map(EquipoMapper::toDTO).toList();
+        return EquipoMapper.toDTOList(equiposRepositorio.findAll());
     }
 
     @Override

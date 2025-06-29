@@ -28,8 +28,7 @@ public class EquiposController {
 
     @GetMapping("listar")
     public ResponseEntity<List<EquiposDTO>> listaequipos(){
-        List<EquiposDTO> equipos = equipoService.listaEquipos();
-        return ResponseEntity.ok(equipos);
+        return ResponseEntity.ok(equipoService.listaEquipos());
     }
 
     @GetMapping
