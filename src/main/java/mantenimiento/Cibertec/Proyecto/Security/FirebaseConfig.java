@@ -18,6 +18,7 @@ public class FirebaseConfig {
     public void init() {
         try {
             String escapedJson = System.getenv("FIREBASE_CONFIG_JSON");
+            System.out.println(System.getenv("FIREBASE_CONFIG_JSON"));
             if (escapedJson == null) {
                 throw new RuntimeException("⚠️ Variable de entorno FIREBASE_CONFIG_ESCAPED no encontrada.");
             }
