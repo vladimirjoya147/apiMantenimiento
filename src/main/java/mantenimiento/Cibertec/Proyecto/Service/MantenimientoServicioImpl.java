@@ -31,6 +31,8 @@ public class MantenimientoServicioImpl implements MantenimientoServicio{
         return mantenimientos.stream().map(m->{
             MantenimientoDTO dto = new MantenimientoDTO();
             dto.setId(m.getId());
+            dto.setDescripcion(m.getDescripcion());
+            dto.setTipo(m.getTipo_mantenimiento());
             dto.setNombreEquipo(m.getEquipos().getNombre());
             dto.setNombreTecnico(m.getUsuarios().getNombre());
             dto.setTipoMantenimiento(m.getTipo_mantenimiento());

@@ -6,6 +6,8 @@ import java.time.LocalDate;
 @Data
 public class MantenimientoDTO {
     private int id;
+    private String tipo;
+    private String descripcion;
     private String nombreEquipo;
     private String nombreTecnico;
     private String tipoMantenimiento;
