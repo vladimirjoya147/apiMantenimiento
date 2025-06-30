@@ -31,8 +31,6 @@ public class MantenimientoServicioImpl implements MantenimientoServicio{
         return mantenimientos.stream().map(m->{
             MantenimientoDTO dto = new MantenimientoDTO();
             dto.setId(m.getId());
-            dto.setFecha(m.getFecha());
-            dto.setDescripcion(m.getDescripcion());
             dto.setNombreEquipo(m.getEquipos().getNombre());
             dto.setNombreTecnico(m.getUsuarios().getNombre());
             dto.setTipoMantenimiento(m.getTipo_mantenimiento());
@@ -63,8 +61,6 @@ public class MantenimientoServicioImpl implements MantenimientoServicio{
                 .orElseThrow(() -> new RuntimeException("Técnico no encontrado"));
 
         Mantenimiento m = new Mantenimiento();
-        m.setFecha(dto.getFecha());
-        m.setDescripcion(dto.getDescripcion());
         m.setEquipos(equipo);
         m.setUsuarios(tecnico);
         m.setTipo_mantenimiento(dto.getTipoMantenimiento());
@@ -76,7 +72,7 @@ public class MantenimientoServicioImpl implements MantenimientoServicio{
 
     @Override
     public void eliminarMantenimiento(int id) {
-        equiposRepositorio.deleteById(id);
+        mantenimientoRepositorio.deleteById(id);
     }
 
 }
