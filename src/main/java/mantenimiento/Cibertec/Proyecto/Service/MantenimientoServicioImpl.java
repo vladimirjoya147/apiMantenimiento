@@ -32,10 +32,9 @@ public class MantenimientoServicioImpl implements MantenimientoServicio{
             MantenimientoDTO dto = new MantenimientoDTO();
             dto.setId(m.getId());
             dto.setDescripcion(m.getDescripcion());
-            dto.setTipoMantenimiento(m.getTipo_mantenimiento());
+            dto.setTipo_mantenimiento(m.getTipo_mantenimiento());
             dto.setNombreEquipo(m.getEquipos().getNombre());
             dto.setNombreTecnico(m.getUsuarios().getNombre());
-            dto.setTipoMantenimiento(m.getTipo_mantenimiento());
             dto.setEstado(m.getEstado());
             return dto;
         }).collect(Collectors.toList());
@@ -65,7 +64,7 @@ public class MantenimientoServicioImpl implements MantenimientoServicio{
         Mantenimiento m = new Mantenimiento();
         m.setEquipos(equipo);
         m.setUsuarios(tecnico);
-        m.setTipo_mantenimiento(dto.getTipoMantenimiento());
+        m.setTipo_mantenimiento(dto.getTipo_mantenimiento());
         m.setEstado(dto.getEstado());
         m.setSincronizado(true);
 
