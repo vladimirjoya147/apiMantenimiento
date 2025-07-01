@@ -2,6 +2,7 @@ package mantenimiento.Cibertec.Proyecto.Service;
 
 import mantenimiento.Cibertec.Proyecto.DTO.ActualizarMantenimientoDTO;
 import mantenimiento.Cibertec.Proyecto.DTO.MantenimientoDTO;
+import mantenimiento.Cibertec.Proyecto.DTO.RegistrarMantenimientoDTO;
 import mantenimiento.Cibertec.Proyecto.Entity.Equipos;
 import mantenimiento.Cibertec.Proyecto.Entity.Mantenimiento;
 import mantenimiento.Cibertec.Proyecto.Entity.Usuarios;
@@ -10,6 +11,7 @@ import mantenimiento.Cibertec.Proyecto.Repositorio.MantenimientoRepositorio;
 import mantenimiento.Cibertec.Proyecto.Repositorio.UsuariosRepositorio;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 @Service
@@ -54,18 +56,20 @@ public class MantenimientoServicioImpl implements MantenimientoServicio{
 
 
     @Override
-    public Mantenimiento guardarMantenimiento(MantenimientoDTO dto) {
-        Equipos equipo = equiposRepositorio.findByNombre(dto.getNombreEquipo())
+    public Mantenimiento guardarMantenimiento(RegistrarMantenimientoDTO dto) {
+        Equipos equipo = equiposRepositorio.findById(dto.getEquipoId())
                 .orElseThrow(() -> new RuntimeException("Equipo no encontrado"));
 
-        Usuarios tecnico = usuariosRepositorio.findByNombre(dto.getNombreTecnico())
+        Usuarios tecnico = usuariosRepositorio.findById(dto.getTecnicoId())
                 .orElseThrow(() -> new RuntimeException("Técnico no encontrado"));
 
         Mantenimiento m = new Mantenimiento();
         m.setEquipos(equipo);
+        m.setDescripcion(dto.getDescripcion());
         m.setUsuarios(tecnico);
         m.setTipo_mantenimiento(dto.getTipo_mantenimiento());
         m.setEstado(dto.getEstado());
+        m.setFecha(LocalDate.parse(dto.getFecha()));
         m.setSincronizado(true);
 
         return mantenimientoRepositorio.save(m);

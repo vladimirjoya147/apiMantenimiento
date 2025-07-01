@@ -2,6 +2,7 @@ package mantenimiento.Cibertec.Proyecto.Controller;
 
 import mantenimiento.Cibertec.Proyecto.DTO.ActualizarMantenimientoDTO;
 import mantenimiento.Cibertec.Proyecto.DTO.MantenimientoDTO;
+import mantenimiento.Cibertec.Proyecto.DTO.RegistrarMantenimientoDTO;
 import mantenimiento.Cibertec.Proyecto.Entity.Mantenimiento;
 import mantenimiento.Cibertec.Proyecto.Service.MantenimientoServicioImpl;
 import mantenimiento.Cibertec.Proyecto.Service.UsuarioServiceImpl;
@@ -34,7 +35,7 @@ public class MantenimientoController {
     }
 
     @PostMapping("/registrar")
-    public ResponseEntity<String> registrarMantenimiento(@RequestBody MantenimientoDTO dto) {
+    public ResponseEntity<String> registrarMantenimiento(@RequestBody RegistrarMantenimientoDTO dto) {
         mantenimientoService.guardarMantenimiento(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Mantenimiento guardado correctamente");
     }
